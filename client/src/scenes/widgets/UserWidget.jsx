@@ -32,7 +32,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
   useEffect(() => {
     getUser();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user) {
     return null;
@@ -62,7 +62,7 @@ const UserWidget = ({ userId, picturePath }) => {
             <Typography
               variant="h4"
               color={dark}
-              fontweight="500"
+              fontWeight="500"
               sx={{
                 "&:hover": {
                   color: palette.primary.light,
