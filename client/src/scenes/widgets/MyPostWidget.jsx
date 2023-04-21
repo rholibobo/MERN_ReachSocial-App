@@ -1,4 +1,3 @@
-import React from "react";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -33,20 +32,21 @@ const MyPostWidget = ({ picturePath }) => {
   const [post, setPost] = useState("");
   const { palette } = useTheme();
   const { _id } = useSelector((state) => state.user);
-  const { token } = useSelector((state) => state.token);
+  const token = useSelector((state) => state.token);
   const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
   const mediumMain = palette.neutral.mediumMain;
   const medium = palette.neutral.medium;
 
   const handlePost = async () => {
     const formData = new FormData();
-    formData.append("user_id", _id);
+    formData.append("userId", _id);
     formData.append("description", post);
     if (image) {
       formData.append("picture", image);
       formData.append("picturePath", image.name);
     }
-    const response = await fetch("http://localhost:3001/posts", {
+
+    const response = await fetch(`http://localhost:3001/posts`, {
       method: "POST",
       headers: { Authorization: `Bearer ${token}` },
       body: formData,
@@ -56,6 +56,7 @@ const MyPostWidget = ({ picturePath }) => {
     setImage(null);
     setPost("");
   };
+
   return (
     <WidgetWrapper>
       <FlexBetween gap="1.5rem">
@@ -118,12 +119,13 @@ const MyPostWidget = ({ picturePath }) => {
       )}
 
       <Divider sx={{ margin: "1.25rem 0" }} />
+
       <FlexBetween>
         <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
           <ImageOutlined sx={{ color: mediumMain }} />
           <Typography
             color={mediumMain}
-            sx={{ "&hover": { cursor: "pointer", color: medium } }}
+            sx={{ "&:hover": { cursor: "pointer", color: medium } }}
           >
             Image
           </Typography>
